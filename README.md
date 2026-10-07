@@ -8,7 +8,9 @@ Instead of endlessly scrolling, the user chooses:
 * ⚡ Energy level
 * 📍 Location type
 
-TouchGrass AI then uses a **local Gemma model through Ollama** to generate a personalized outdoor micro-adventure.
+To<img width="660" height="434" alt="Screenshot 2026-10-07 223024" src="https://github.com/user-attachments/assets/7e0fac51-e05c-4f31-8001-7422afa347d9" />
+<img width="660" height="434" alt="Screenshot 2026-10-07 223024" src="https://github.com/user-attachments/assets/1e25ff44-0afc-4d8d-877d-456348c11359" />
+uchGrass AI then uses a **local Gemma model through Ollama** to generate a personalized outdoor micro-adventure.
 
 ## ✨ Features
 
