@@ -1,0 +1,818 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TouchGrass AI</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background:
+        radial-gradient(circle at top, #244d35 0%, #102018 45%, #08100c 100%);
+    color: white;
+    min-height: 100vh;
+    padding: 30px 15px;
+}
+
+.container {
+    max-width: 760px;
+    margin: auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.logo {
+    font-size: 55px;
+}
+
+h1 {
+    font-size: 48px;
+    margin: 5px 0;
+    letter-spacing: 2px;
+}
+
+.tagline {
+    color: #b9d9c0;
+    font-size: 16px;
+}
+
+.card {
+    background: rgba(24, 53, 38, 0.95);
+    border: 1px solid rgba(155, 225, 93, 0.15);
+    border-radius: 25px;
+    padding: 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+
+label {
+    display: block;
+    text-align: left;
+    margin: 15px 5% 6px;
+    color: #b9d9c0;
+    font-size: 14px;
+}
+
+select,
+textarea,
+button {
+    width: 90%;
+    padding: 14px;
+    margin: 6px auto;
+    border-radius: 13px;
+    border: none;
+    font-size: 16px;
+    display: block;
+}
+
+select {
+    background: #f4f7f4;
+    color: #17251c;
+}
+
+button {
+    background: #9be15d;
+    color: #102018;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+}
+
+button.secondary {
+    background: #294a35;
+    color: white;
+    border: 1px solid #52745c;
+}
+
+button.danger {
+    background: #402d2d;
+    color: #ffd4d4;
+}
+
+#status {
+    margin: 18px;
+    color: #9be15d;
+    font-weight: bold;
+    min-height: 20px;
+}
+
+.section {
+    display: none;
+}
+
+.quest-title {
+    color: #9be15d;
+    margin-top: 0;
+}
+
+#answer {
+    text-align: left;
+    white-space: pre-wrap;
+    line-height: 1.7;
+    background: #0d1711;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.timer {
+    font-size: 82px;
+    font-weight: bold;
+    color: #9be15d;
+    margin: 25px 0;
+    letter-spacing: 3px;
+}
+
+.phone-warning {
+    color: #b9d9c0;
+    font-size: 14px;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 120px;
+    background: #f4f7f4;
+    color: #17251c;
+}
+
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.stat {
+    background: #0d1711;
+    border-radius: 15px;
+    padding: 15px 25px;
+    min-width: 130px;
+}
+
+.stat-number {
+    display: block;
+    font-size: 28px;
+    color: #9be15d;
+    font-weight: bold;
+}
+
+.stat-label {
+    color: #b9d9c0;
+    font-size: 12px;
+}
+
+.history-item {
+    background: #0d1711;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 12px;
+    text-align: left;
+}
+
+.history-item strong {
+    color: #9be15d;
+}
+
+.footer {
+    text-align: center;
+    color: #789681;
+    font-size: 12px;
+    margin-top: 25px;
+}
+
+</style>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#9be15d">
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<div class="logo">🌿</div>
+
+<h1>TOUCHGRASS</h1>
+
+<p class="tagline">
+Local AI that gives you one reason to leave the screen.
+</p>
+
+<div class="stats">
+
+<div class="stat">
+<span class="stat-number" id="completedCount">0</span>
+<span class="stat-label">QUESTS COMPLETED</span>
+</div>
+
+<div class="stat">
+<span class="stat-number">🤖</span>
+<span class="stat-label">LOCAL AI</span>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- GENERATOR -->
+
+<div class="card" id="generator">
+
+<h2>🌱 Create Your Adventure</h2>
+
+<p>
+Tell the AI what kind of outdoor experience you want.
+</p>
+
+<label>TIME</label>
+
+<select id="time">
+
+<option value="10">
+10 minutes
+</option>
+
+<option value="20" selected>
+20 minutes
+</option>
+
+<option value="30">
+30 minutes
+</option>
+
+</select>
+
+
+<label>ENERGY LEVEL</label>
+
+<select id="energy">
+
+<option>
+Low energy
+</option>
+
+<option selected>
+Medium energy
+</option>
+
+<option>
+High energy
+</option>
+
+</select>
+
+
+<label>LOCATION</label>
+
+<select id="place">
+
+<option>
+Neighborhood
+</option>
+
+<option selected>
+Park
+</option>
+
+<option>
+Garden
+</option>
+
+<option>
+College campus
+</option>
+
+</select>
+
+
+<button onclick="generateQuest()">
+🌿 GENERATE MY QUEST
+</button>
+
+<div id="status"></div>
+
+</div>
+
+
+<!-- QUEST -->
+
+<div class="card section" id="quest">
+
+<h2 class="quest-title">
+🌿 YOUR AI QUEST
+</h2>
+
+<div id="answer"></div>
+
+<button onclick="startQuest()">
+🌱 START QUEST
+</button>
+
+<button class="secondary" onclick="newQuest()">
+↻ CHANGE QUEST
+</button>
+
+</div>
+
+
+<!-- ADVENTURE -->
+
+<div class="card section" id="adventure">
+
+<h2>🌱 QUEST STARTED</h2>
+
+<div class="timer" id="timer">
+00:00
+</div>
+
+<p>
+<b>PUT THE PHONE AWAY.</b>
+</p>
+
+<p class="phone-warning">
+Go outside. Complete your mission. Notice something new.
+</p>
+
+<button onclick="finishQuest()">
+✓ I'M BACK
+</button>
+
+</div>
+
+
+<!-- REFLECTION -->
+
+<div class="card section" id="reflection">
+
+<h2>WELCOME BACK 🌿</h2>
+
+<p>
+What did you notice during your adventure?
+</p>
+
+<textarea
+id="note"
+placeholder="Write your reflection here..."
+></textarea>
+
+<button onclick="saveReflection()">
+💾 SAVE REFLECTION
+</button>
+
+<p id="saved"></p>
+
+<button class="secondary" onclick="newQuest()">
+🌱 START ANOTHER QUEST
+</button>
+
+</div>
+
+
+<!-- HISTORY -->
+
+<div class="card">
+
+<h2>📖 YOUR JOURNEY</h2>
+
+<div id="history">
+<p class="phone-warning">
+No completed quests yet. Go touch some grass! 🌱
+</p>
+</div>
+
+<button
+class="danger"
+onclick="clearHistory()"
+>
+CLEAR LOCAL HISTORY
+</button>
+
+</div>
+
+
+<div class="footer">
+
+🌿 TouchGrass AI · Powered locally by Ollama + Gemma<br>
+Your reflections stay on this device.
+
+</div>
+
+</div>
+
+
+<script>
+
+let seconds = 0;
+let timerInterval = null;
+
+let currentQuest = "";
+
+
+// -------------------------
+// LOAD SAVED DATA
+// -------------------------
+
+function loadHistory() {
+
+    let history =
+        JSON.parse(
+            localStorage.getItem("touchgrass_history") || "[]"
+        );
+
+    document.getElementById("completedCount").innerText =
+        history.length;
+
+    let historyBox =
+        document.getElementById("history");
+
+    if (history.length === 0) {
+
+        historyBox.innerHTML =
+            '<p class="phone-warning">' +
+            'No completed quests yet. Go touch some grass! 🌱' +
+            '</p>';
+
+        return;
+    }
+
+    historyBox.innerHTML = "";
+
+    history.slice().reverse().forEach(function(item) {
+
+        let div =
+            document.createElement("div");
+
+        div.className = "history-item";
+
+        div.innerHTML =
+            "<strong>" +
+            escapeHTML(item.date) +
+            "</strong><br><br>" +
+            escapeHTML(item.quest) +
+            "<br><br>" +
+            "<em>" +
+            escapeHTML(item.reflection || "No reflection") +
+            "</em>";
+
+        historyBox.appendChild(div);
+
+    });
+
+}
+
+
+// -------------------------
+// ESCAPE TEXT
+// -------------------------
+
+function escapeHTML(text) {
+
+    let div =
+        document.createElement("div");
+
+    div.innerText = text;
+
+    return div.innerHTML;
+
+}
+
+
+// -------------------------
+// GENERATE QUEST
+// -------------------------
+
+async function generateQuest() {
+
+    document.getElementById("status").innerText =
+        "🌿 GEMMA IS THINKING...";
+
+    document.getElementById("quest").style.display =
+        "none";
+
+    try {
+
+        let response =
+            await fetch("/generate", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    time:
+                        document.getElementById("time").value,
+
+                    energy:
+                        document.getElementById("energy").value,
+
+                    place:
+                        document.getElementById("place").value
+
+                })
+
+            });
+
+
+        let data =
+            await response.json();
+
+
+        if (data.error) {
+
+            throw new Error(data.error);
+
+        }
+
+
+        currentQuest =
+            data.answer;
+
+
+        document.getElementById("status").innerText =
+            "✓ Generated locally by Gemma";
+
+
+        document.getElementById("answer").innerText =
+            data.answer;
+
+
+        document.getElementById("quest").style.display =
+            "block";
+
+
+    }
+
+    catch (error) {
+
+        document.getElementById("status").innerText =
+            "❌ " + error.message;
+
+    }
+
+}
+
+
+// -------------------------
+// START QUEST
+// -------------------------
+
+function startQuest() {
+
+    let minutes =
+        parseInt(
+            document.getElementById("time").value
+        );
+
+
+    seconds =
+        minutes * 60;
+
+
+    document.getElementById("quest").style.display =
+        "none";
+
+
+    document.getElementById("generator").style.display =
+        "none";
+
+
+    document.getElementById("adventure").style.display =
+        "block";
+
+
+    updateTimer();
+
+
+    if (timerInterval) {
+
+        clearInterval(timerInterval);
+
+    }
+
+
+    timerInterval =
+        setInterval(function() {
+
+            seconds--;
+
+            updateTimer();
+
+
+            if (seconds <= 0) {
+
+                clearInterval(timerInterval);
+
+                document.getElementById("timer").innerText =
+                    "00:00";
+
+            }
+
+        }, 1000);
+
+}
+
+
+// -------------------------
+// TIMER
+// -------------------------
+
+function updateTimer() {
+
+    let minutes =
+        Math.floor(seconds / 60);
+
+    let secs =
+        seconds % 60;
+
+
+    document.getElementById("timer").innerText =
+
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(secs).padStart(2, "0");
+
+}
+
+
+// -------------------------
+// FINISH QUEST
+// -------------------------
+
+function finishQuest() {
+
+    if (timerInterval) {
+
+        clearInterval(timerInterval);
+
+    }
+
+
+    document.getElementById("adventure").style.display =
+        "none";
+
+
+    document.getElementById("reflection").style.display =
+        "block";
+
+
+    document.getElementById("note").focus();
+
+}
+
+
+// -------------------------
+// SAVE REFLECTION
+// -------------------------
+
+function saveReflection() {
+
+    let note =
+        document.getElementById("note").value.trim();
+
+
+    let history =
+        JSON.parse(
+            localStorage.getItem("touchgrass_history") || "[]"
+        );
+
+
+    history.push({
+
+        date:
+            new Date().toLocaleString(),
+
+        quest:
+            currentQuest,
+
+        reflection:
+            note || "No reflection written."
+
+    });
+
+
+    localStorage.setItem(
+        "touchgrass_history",
+        JSON.stringify(history)
+    );
+
+
+    document.getElementById("saved").innerText =
+        "✓ Saved locally on this device.";
+
+
+    document.getElementById("note").value =
+        "";
+
+
+    loadHistory();
+
+}
+
+
+// -------------------------
+// NEW QUEST
+// -------------------------
+
+function newQuest() {
+
+    if (timerInterval) {
+
+        clearInterval(timerInterval);
+
+    }
+
+
+    document.getElementById("quest").style.display =
+        "none";
+
+    document.getElementById("adventure").style.display =
+        "none";
+
+    document.getElementById("reflection").style.display =
+        "none";
+
+    document.getElementById("generator").style.display =
+        "block";
+
+    document.getElementById("status").innerText =
+        "";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+// -------------------------
+// CLEAR HISTORY
+// -------------------------
+
+function clearHistory() {
+
+    let confirmDelete =
+        confirm(
+            "Clear all locally saved quest history?"
+        );
+
+
+    if (!confirmDelete) {
+
+        return;
+
+    }
+
+
+    localStorage.removeItem(
+        "touchgrass_history"
+    );
+
+
+    loadHistory();
+
+}
+
+
+// -------------------------
+// INITIAL LOAD
+// -------------------------
+
+loadHistory();
+
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/service-worker.js");
+}
+</script>
+
+</body>
+
+</html>
+```
