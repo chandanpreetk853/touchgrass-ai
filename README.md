@@ -65,7 +65,7 @@ ollama pull gemma3:1b
 ### 2. Clone the repository
 
 ```bash
-git clone YOUR_REPOSITORY_URL
+git clone https://github.com/chandanpreetk853/touchgrass-ai.git
 cd touchgrass-ai
 ```
 
