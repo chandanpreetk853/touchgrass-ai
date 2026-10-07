@@ -124,4 +124,4 @@ Future improvements could include:
 
 ## 📄 License
 
-This project is open source and available for learning and experimentation.
+This project is open source and available for learning and experimentation.Built with local AI using Ollama + Gemma 3 1B. 🌿
